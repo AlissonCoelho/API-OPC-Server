@@ -1,15 +1,12 @@
-//Express
-const express = require('express');
-const app = express();
-const consign = require('consign');
-const port = 8000;
+const configExpress = require('./configExpress');
+const connection = require('./model/connection')
+const Tables = require('./model/tables')
 
-//ler formularios
-app.use(express.json());
-app.use(express.urlencoded())
-consign()
-    .include('rotas')
-    .into(app);
+connection.connect(err => err ? console.log('mysql erro', err) : main())
 
-//Executa express
-app.listen(port, () => { console.log(`Servidor rodando na porta ${port}`) }); 
+function main() {
+    console.log('MySQL conectado');
+    Tables.init(connection);
+    const app = configExpress;
+    app.listen(8000, () => console.log('Server running on port 8000'));
+}
