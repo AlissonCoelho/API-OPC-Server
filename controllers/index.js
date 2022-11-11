@@ -5,19 +5,7 @@ const token = require('./token');
 
 module.exports = app => {
     app.post('/admin/criarUsuario', async (req, res) => {
-        await token.checarToken(req).then((err, msg) => {
-            if (err) {
-                res.status(500).send(`error: ${msg}`);
-                console.log(`error: ${msg}`);
-            }
-            else {
-                console.log(`creatUser`);
-                usuarios.creatUser(req, res);
-            }
-        }).catch((err) => {
-            res.status(500).send(`error: ${err}`);
-        });
-
+        await token.checarToken(req,res,(req, res)=>{usuarios.creatUser(req, res); })
     });
 
     app.post('/login', (req, res) => {
@@ -29,78 +17,23 @@ module.exports = app => {
     });
 
     app.get('/conectar', async (req, res) => {
-        await token.checarToken(req).then((err, msg) => {
-            if (err) {
-                res.status(500).send(`error: ${msg}`);
-                console.log(`error: ${msg}`);
-            }
-            else {
-                console.log(`conectar`);
-                opcua.conect(req, res);
-            }
-        }).catch((err) => {
-            res.status(500).send(`error: ${err}`);
-        });
-
+        await token.checarToken(req,res,(req, res)=>{opcua.conect(req, res);; })
     });
 
     app.get('/desconectar', async (req, res) => {
-        await token.checarToken(req).then((err, msg) => {
-            if (err) {
-                res.status(500).send(`error: ${msg}`);
-                console.log(`error: ${msg}`);
-            }
-            else {
-                console.log(`desconectar`);
-                opcua.disconnect(req, res);
-            }
-        }).catch((err) => {
-            res.status(500).send(`error: ${err}`);
-        });
-
+        await token.checarToken(req,res,(req, res)=>{opcua.disconnect(req, res);; })
     });
 
     app.get('/motor', async (req, res) => {
-        await token.checarToken(req).then((err, msg) => {
-            if (err) {
-                res.status(500).send(`error: ${msg}`);
-                console.log(`error: ${msg}`);
-            }
-            else {
-                console.log(`lerVariavel`);
-                opcua.motor(req, res);
-            }
-        }).catch((err) => {
-            res.status(500).send(`error: ${err}`);
-        });
+        await token.checarToken(req,res,(req, res)=>{opcua.motor(req, res);; })
     });
+
     app.get('/temperatura', async (req, res) => {
-        await token.checarToken(req).then((err, msg) => {
-            if (err) {
-                res.status(500).send(`error: ${msg}`);
-                console.log(`error: ${msg}`);
-            }
-            else {
-                console.log(`lerVariavel`);
-                opcua.temperatura(req, res);
-            }
-        }).catch((err) => {
-            res.status(500).send(`error: ${err}`);
-        });
+        await token.checarToken(req,res,(req, res)=>{opcua.temperatura(req, res);; })
     });
+
     app.get('/Fluxo', async (req, res) => {
-        await token.checarToken(req).then((err, msg) => {
-            if (err) {
-                res.status(500).send(`error: ${msg}`);
-                console.log(`error: ${msg}`);
-            }
-            else {
-                console.log(`lerVariavel`);
-                opcua.fluxo(req, res);
-            }
-        }).catch((err) => {
-            res.status(500).send(`error: ${err}`);
-        });
+        await token.checarToken(req,res,(req, res)=>{opcua.fluxo(req, res);; })
     });
 
 

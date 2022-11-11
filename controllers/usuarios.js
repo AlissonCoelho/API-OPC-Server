@@ -13,7 +13,7 @@ class Usuario {
         password: bcrypt.hashSync(req.body.password,12)
       }
       connection.query(sql, user, (err, result) => err ? res.status(400).send(err) : res.status(200).send(result))
-      console.log("body creatUser", req.body);
+      console.log("body creatUser");
     } catch (error) {
       console.log("error on creat user");
       res.status(500).send("error on creat user");
@@ -41,7 +41,8 @@ class Usuario {
             req.body.userName = result[0].userName;
             console.log('result[0].userName',result[0].userName);
             const getToken = token.creatTokenJWT(req.body);
-            res.cookie("token", getToken, { httpOnly: true });
+            res.cookie("token", getToken);
+            res.cookie("Matricula", req.body.Matricula);
             console.log('login successful');
             res
               .status(200)
@@ -65,7 +66,8 @@ class Usuario {
   logout(req, res) {
     const token = req.query.token || req.body.token;
     if (token) {
-      res.cookie("token", null, { httpOnly: true });
+      res.clearCookie("token");
+      res.clearCookie("Matricula");
       res.status(204).send("logout realizado");
       console.log("logout realizado");
       return;
