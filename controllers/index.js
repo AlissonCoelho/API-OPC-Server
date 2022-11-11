@@ -18,7 +18,7 @@ module.exports = app => {
             res.status(500).send(`error: ${err}`);
         });
 
-    });   
+    });
 
     app.post('/login', (req, res) => {
         usuarios.login(req, res);
@@ -60,7 +60,7 @@ module.exports = app => {
 
     });
 
-    app.get('/lerVariavel', async (req, res) => {
+    app.get('/motor', async (req, res) => {
         await token.checarToken(req).then((err, msg) => {
             if (err) {
                 res.status(500).send(`error: ${msg}`);
@@ -68,11 +68,40 @@ module.exports = app => {
             }
             else {
                 console.log(`lerVariavel`);
-                opcua.readVariable(req, res);
+                opcua.motor(req, res);
             }
         }).catch((err) => {
             res.status(500).send(`error: ${err}`);
         });
     });
-    
+    app.get('/temperatura', async (req, res) => {
+        await token.checarToken(req).then((err, msg) => {
+            if (err) {
+                res.status(500).send(`error: ${msg}`);
+                console.log(`error: ${msg}`);
+            }
+            else {
+                console.log(`lerVariavel`);
+                opcua.temperatura(req, res);
+            }
+        }).catch((err) => {
+            res.status(500).send(`error: ${err}`);
+        });
+    });
+    app.get('/Fluxo', async (req, res) => {
+        await token.checarToken(req).then((err, msg) => {
+            if (err) {
+                res.status(500).send(`error: ${msg}`);
+                console.log(`error: ${msg}`);
+            }
+            else {
+                console.log(`lerVariavel`);
+                opcua.fluxo(req, res);
+            }
+        }).catch((err) => {
+            res.status(500).send(`error: ${err}`);
+        });
+    });
+
+
 }

@@ -14,7 +14,7 @@ function app() {
     app.use(cookieParser());
 
     consign()
-        .include('rotas')
+        .include('controllers')
         .into(app)
 
     return app;

@@ -52,6 +52,45 @@ class OPCUA {
             }
         })
     }
+    async motor(req, res) {
+        if (!the_session) {
+            console.log(`desconectado`)
+            res.status(502).send(`desconectado`);
+            return;
+        }
+        await the_session.read({ nodeId: "ns=2;s=MDB.PLC1.Motor", attributeId: AttributeIds.Value }, (err, dataValue) => {
+            if (!err) {
+                console.log(`Motor value: ${dataValue.value.value}`);
+                res.status(200).send(`value: ${dataValue.value.value}`);
+            }
+        })
+    }
+    async temperatura(req, res) {
+        if (!the_session) {
+            console.log(`desconectado`)
+            res.status(502).send(`desconectado`);
+            return;
+        }
+        await the_session.read({ nodeId: "ns=2;s=MDB.PLC1.Temperatura", attributeId: AttributeIds.Value }, (err, dataValue) => {
+            if (!err) {
+                console.log(`Temperatura value: ${dataValue.value.value}`);
+                res.status(200).send(`value: ${dataValue.value.value}`);
+            }
+        })
+    }
+    async fluxo(req, res) {
+        if (!the_session) {
+            console.log(`desconectado`)
+            res.status(502).send(`desconectado`);
+            return;
+        }
+        await the_session.read({ nodeId: "ns=2;s=MDB.PLC1.Fluxo", attributeId: AttributeIds.Value }, (err, dataValue) => {
+            if (!err) {
+                console.log(`Fluxo value: ${dataValue.value.value}`);
+                res.status(200).json(`value: ${dataValue.value.value}`);
+            }
+        })
+    }
 }
 
 module.exports = new OPCUA();
